@@ -1,0 +1,313 @@
+/* Estilos globales */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Navbar */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Cards */
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 2px solid #0d6efd;
+    font-weight: bold;
+}
+
+/* Botones */
+.btn {
+    border-radius: 0.375rem;
+    font-weight: 500;
+}
+
+/* Tablas */
+.table {
+    background-color: white;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+}
+
+/* Badges */
+.badge {
+    padding: 0.35em 0.65em;
+    font-weight: 500;
+}
+
+/* Estados de mesa */
+.mesa-disponible {
+    background-color: #d1e7dd;
+    border: 2px solid #198754;
+    color: #0f5132;
+}
+
+.mesa-ocupada {
+    background-color: #f8d7da;
+    border: 2px solid #dc3545;
+    color: #842029;
+}
+
+.mesa-reservada {
+    background-color: #fff3cd;
+    border: 2px solid #ffc107;
+    color: #997404;
+}
+
+.mesa-limpieza {
+    background-color: #cfe2ff;
+    border: 2px solid #0d6efd;
+    color: #084298;
+}
+
+/* Mapa de mesas */
+.mesa-card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.mesa-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.mesa-numero {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Estados de comanda */
+.estado-pendiente {
+    background-color: #fff3cd;
+    color: #997404;
+}
+
+.estado-en_preparacion {
+    background-color: #cfe2ff;
+    color: #084298;
+}
+
+.estado-lista {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.estado-entregada {
+    background-color: #e2e3e5;
+    color: #41464b;
+}
+
+.estado-cancelada {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+/* Productos */
+.producto-card {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.producto-card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border-color: #0d6efd !important;
+}
+
+.producto-precio {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #198754;
+}
+
+.producto-sin-stock {
+    opacity: 0.6;
+    position: relative;
+}
+
+.producto-sin-stock::after {
+    content: "Sin Stock";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #dc3545;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+/* Alertas de stock */
+.alerta-stock {
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Dashboard */
+.stat-card {
+    border-left: 4px solid;
+    padding: 1.5rem;
+}
+
+.stat-card.primary {
+    border-left-color: var(--primary-color);
+}
+
+.stat-card.success {
+    border-left-color: var(--success-color);
+}
+
+.stat-card.warning {
+    border-left-color: var(--warning-color);
+}
+
+.stat-card.danger {
+    border-left-color: var(--danger-color);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+}
+
+/* Ticket de pago */
+.ticket {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 2rem;
+    border: 1px solid #dee2e6;
+}
+
+.ticket-header {
+    text-align: center;
+    border-bottom: 2px dashed #dee2e6;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.ticket-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+}
+
+.ticket-total {
+    border-top: 2px solid #dee2e6;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+/* Loading spinner */
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .mesa-card {
+        min-height: 100px;
+    }
+
+    .mesa-numero {
+        font-size: 1.5rem;
+    }
+}
+
+/* Utilidades */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Print styles */
+@media print {
+
+    .navbar,
+    .btn,
+    footer,
+    .no-print {
+        display: none !important;
+    }
+
+    body {
+        background-color: white;
+    }
+
+    .ticket {
+        border: none;
+        box-shadow: none;
+    }
+}

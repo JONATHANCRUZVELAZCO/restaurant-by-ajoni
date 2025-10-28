@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <h1><i class="bi bi-person-badge"></i> Panel Mesero</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{{ url_for('mesas.mapa') }}" class="btn btn-lg btn-primary w-100 mb-3">
+                <i class="bi bi-grid-3x3"></i> Ver Mesas
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a href="{{ url_for('comandas.listar') }}" class="btn btn-lg btn-info w-100 mb-3">
+                <i class="bi bi-receipt"></i> Mis Comandas
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

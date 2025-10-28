@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <h1><i class="bi bi-egg-fried"></i> Panel Cocina</h1>
+    <a href="{{ url_for('comandas.listar') }}" class="btn btn-lg btn-warning">
+        Ver Comandas Pendientes
+    </a>
+</div>
+{% endblock %}
