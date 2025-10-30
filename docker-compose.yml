@@ -1,0 +1,127 @@
+version: '3.8'
+
+# ==========================================
+# DOCKER COMPOSE - PRODUCCIÓN
+# ==========================================
+# Usar con: docker-compose -f docker-compose.prod.yml up -d
+
+services:
+  # ==========================================
+  # BASE DE DATOS - PostgreSQL
+  # ==========================================
+  db:
+    image: postgres:15-alpine
+    container_name: restaurant_pos_db_prod
+    restart: always
+    
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-restaurant_db}
+      POSTGRES_USER: ${POSTGRES_USER:-restaurant}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # OBLIGATORIO en .env
+    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backups:/backups
+    
+    # NO exponer puerto en producción (solo acceso interno)
+    # ports:
+    #   - "5432:5432"
+    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-restaurant}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    
+    networks:
+      - restaurant_network
+
+  # ==========================================
+  # APLICACIÓN WEB - Flask
+  # ==========================================
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: restaurant_pos_web_prod
+    restart: always
+    
+    ports:
+      - "5000:5000"
+    
+    environment:
+      # Configuración de Flask
+      - FLASK_ENV=production
+      - FLASK_APP=run.py
+      - FLASK_DEBUG=0
+      
+      # Base de datos (usar variables de entorno)
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-restaurant}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-restaurant_db}
+      
+      # Seguridad (CRÍTICO: cambiar en producción)
+      - SECRET_KEY=${SECRET_KEY}  # OBLIGATORIO en .env
+      
+      # Zona horaria
+      - TZ=America/Mexico_City
+    
+    depends_on:
+      db:
+        condition: service_healthy
+    
+    # NO montar código en producción
+    # volumes:
+    #   - .:/app
+    
+    command: >
+      sh -c "
+        sleep 5 &&
+        python init_db.py &&
+        gunicorn --bind 0.0.0.0:5000 --workers 8 --timeout 120 --log-level info run:app
+      "
+    
+    networks:
+      - restaurant_network
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/auth/login"]
+      interval: 60s
+      timeout: 15s
+      retries: 3
+
+  # ==========================================
+  # NGINX - Proxy Reverso (Opcional)
+  # ==========================================
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: restaurant_pos_nginx
+  #   restart: always
+  #   
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./ssl:/etc/nginx/ssl:ro
+  #   
+  #   depends_on:
+  #     - web
+  #   
+  #   networks:
+  #     - restaurant_network
+
+# ==========================================
+# VOLÚMENES
+# ==========================================
+volumes:
+  postgres_data:
+    name: restaurant_pos_postgres_data_prod
+    driver: local
+
+# ==========================================
+# REDES
+# ==========================================
+networks:
+  restaurant_network:
+    name: restaurant_pos_network_prod
+    driver: bridge
