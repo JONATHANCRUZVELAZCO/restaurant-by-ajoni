@@ -8,3 +8,4 @@ Werkzeug==3.0.1           # Utilidades Flask
 WTForms==3.1.1            # Validación de formularios
 pytz==2023.3              # Manejo de zonas horarias
 gunicorn==21.2.0          # Servidor WSGI para producción
+Flask-Migrate==4.0.4      # Migraciones de base de datos

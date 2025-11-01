@@ -22,5 +22,5 @@ EXPOSE 5000
 ENV FLASK_APP=run.py
 ENV PYTHONUNBUFFERED=1
 
-# Comando de inicio
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "4", "--timeout", "120", "run:app"]
+# Comando de inicio: usar la variable PORT si está disponible (Render la provee)
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 4 --timeout 120 run:app"]

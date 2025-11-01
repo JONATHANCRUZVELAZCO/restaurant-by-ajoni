@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: restaurant-by-ajoni
+    env: docker
+    plan: free
+    region: oregon
+    dockerfilePath: Dockerfile
+    # No buildCommand/startCommand needed when using Dockerfile with CMD
+    # environment variables should be set in the Render dashboard or via CLI
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        fromDatabase: false
+      - key: DATABASE_URL
+        fromDatabase: false
